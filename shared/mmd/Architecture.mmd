@@ -1,0 +1,56 @@
+graph TD
+    %% --- TANIMLAR ---
+    
+    %% Trafik Kaynağı
+    TrafficSource["<center><b>Kullanıcı Trafiği</b><br>Karışık İstek Havuzu</center>"]
+
+    %% İstek Tipleri (Request Weights)
+    subgraph Request_Types [İstek Ağırlıkları / CPU Maliyeti]
+        style Request_Types fill:#e3f2fd,stroke:#1565c0,stroke-dasharray: 5 5
+        
+        ReqHigh["<center><b>🔥 Ağır İstek</b><br>Ağırlık: 20 Unit<br>(Video İşleme, DB Yazma)</center>"]
+        ReqMid["<center><b>⚡ Orta İstek</b><br>Ağırlık: 10 Unit<br>(API Çağrısı)</center>"]
+        ReqLow["<center><b>🍃 Hafif İstek</b><br>Ağırlık: 2 Unit<br>(Ping, Statik Dosya)</center>"]
+    end
+
+    LB["<center><b>Load Balancer</b><br><i>İstek Maliyetine Göre Dağıtım</i><br>Algoritma: Dynamic Capacity Check</center>"]
+    
+    subgraph Server_Farm [Sunucu Çiftliği]
+        style Server_Farm fill:#f9f9f9,stroke:#333,stroke-width:2px
+        
+        %% Sunuculardan Ağırlık parametresi kaldırıldı, sadece Kapasite/Hız kaldı
+        S1["<center><b>Sunucu 1</b><br>Kapasite: 100 Unit<br>Hız: 1.5x</center>"]
+        S2["<center><b>Sunucu 2</b><br>Kapasite: 100 Unit<br>Hız: 1.2x</center>"]
+        S3["<center><b>Sunucu 3</b><br>Kapasite: 100 Unit<br>Hız: 1.0x</center>"]
+        S4["<center><b>Sunucu 4</b><br>Kapasite: 100 Unit<br>Hız: 0.8x</center>"]
+    end
+
+    %% --- BAĞLANTILAR ---
+    TrafficSource --> ReqHigh
+    TrafficSource --> ReqMid
+    TrafficSource --> ReqLow
+
+    %% Farklı kalınlıkta oklar
+    ReqHigh ==>|Yüksek Yük| LB
+    ReqMid -->|Orta Yük| LB
+    ReqLow -.->|Düşük Yük| LB
+
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+
+    %% --- STİL ---
+    style TrafficSource fill:#eceff1,stroke:#455a64
+    style LB fill:#fff9c4,stroke:#fbc02d
+    
+    %% Request Stilleri
+    style ReqHigh fill:#ffcdd2,stroke:#c62828,stroke-width:2px
+    style ReqMid fill:#fff3e0,stroke:#ef6c00
+    style ReqLow fill:#e8f5e9,stroke:#2e7d32
+    
+    %% Sunucu Stilleri
+    style S1 fill:#dcedc8,stroke:#558b2f
+    style S2 fill:#dcedc8,stroke:#558b2f
+    style S3 fill:#dcedc8,stroke:#558b2f
+    style S4 fill:#dcedc8,stroke:#558b2f

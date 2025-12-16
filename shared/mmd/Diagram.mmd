@@ -1,0 +1,27 @@
+stateDiagram-v2
+    [*] --> Olusturuldu : generate_request_sequence()
+    
+    Olusturuldu --> Secildi : LB Algoritması Atadı
+    
+    state CPU_Kontrol_Sonucu <<choice>>
+    
+    Secildi --> CPU_Kontrol_Sonucu : CPU Kapasite Kontrolü
+    
+    CPU_Kontrol_Sonucu --> Isleniyor : Kapasite Var
+    CPU_Kontrol_Sonucu --> Kuyrukta : Kapasite Yok (CPU > 100)
+    
+    state Kuyrukta {
+        [*] --> Bekliyor
+        Bekliyor --> Bekliyor : Sıra Gelmedi
+    }
+    
+    Kuyrukta --> Isleniyor : Sunucu Boşaldı (pop)
+    
+    state Isleniyor {
+        [*] --> CPU_Yukle : mevcut_cpu_yuku artar
+        CPU_Yukle --> Zaman_Geciyor : time_step ilerler
+        Zaman_Geciyor --> CPU_Birak : islem_suresi <= 0
+    }
+    
+    Isleniyor --> Tamamlandi : Request Bitti
+    Tamamlandi --> [*]

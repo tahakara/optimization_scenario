@@ -1,0 +1,26 @@
+flowchart TD
+    Start([Yeni Request Geldi]) --> SelectServer{Algoritma<br>Sunucu Seçer}
+    
+    SelectServer -- RR / WRR / LC / WLC --> Target[Hedef Sunucu Belirlendi]
+    
+    Target --> CPUCheck{"Sunucu CPU<br>Uygun mu?<br>(< 100 Unit)"}
+    
+    CPUCheck -- Evet --> Process[<b>İşlem Başlat</b><br>Request CPU'ya yüklenir]
+    
+    CPUCheck -- Hayır --> FindAlt{Diğer Sunucularda<br>Yer Var mı?}
+    
+    FindAlt -- Evet (Bulundu) --> Process
+    
+    FindAlt -- Hayır (Hepsi Dolu) --> Queue[<b>Kuyruğa Ekle</b><br>Bekleme Süresi Başlar]
+    
+    Process --> Processing[Simülasyon Zamanı İlerler...]
+    Queue --> |Kapasite Açılınca| Process
+    
+    Processing --> Finish([<b>Tamamlandı</b><br>CPU Yükü Azalır])
+
+    %% Stil Tanımları
+    style Start fill:#b2ebf2
+    style Finish fill:#b2ebf2
+    style CPUCheck fill:#ffcc80
+    style Queue fill:#ef9a9a
+    style Process fill:#a5d6a7
