@@ -5,13 +5,13 @@
 Aşağıdaki diyagramlar, yük dengeleme simülasyon sisteminin mimarisini ve çalışma akışını göstermektedir:
 
 ### Sistem Mimarisi Diyagramı
-![Sistem Mimarisi](shared/png/Architecture.png)
+![Sistem Mimarisi](shared/png/Architecture_bg_w.png)
 
 ### Genel Sistem Diyagramı
-![Sistem Diyagramı](shared/png/Diagram.png)
+![Sistem Diyagramı](shared/png/Diagram_bg_w.png)
 
 ### İş Akış Şeması
-![İş Akış Şeması](shared/png/FlowChart.png)
+![İş Akış Şeması](shared/png/FlowChart_bg_w.png)
 
 ---
 
