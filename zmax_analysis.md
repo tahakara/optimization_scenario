@@ -248,7 +248,7 @@ Simülasyon sonuçlarına ait grafikler aşağıdaki gibidir:
 ### Yük Dengeleme İş Akışı
 Aşağıdaki akış şeması, yük dengeleme algoritmalarının nasıl çalıştığını ve karar verme süreçlerini göstermektedir:
 
-![Yük Dengeleme İş Akışı](shared/png/FlowChart.png)
+<!-- ![Yük Dengeleme İş Akışı](shared/png/FlowChart.png) -->
 
 Bu akış şeması şunları gösterir:
 - İsteklerin sisteme nasıl geldiği
@@ -288,7 +288,7 @@ Aşağıdaki grafik, her algoritma için Zmax değerlerini göstermektedir:
 ## Sistem Mimarisi ve Bileşenler
 
 ### Mimari Genel Bakış
-![Mimari Diyagram](shared/png/Architecture.png)
+<!-- ![Mimari Diyagram](shared/png/Architecture.png) -->
 
 Yukarıdaki mimari diyagram, sistemin ana bileşenlerini göstermektedir:
 
@@ -318,7 +318,7 @@ Yukarıdaki mimari diyagram, sistemin ana bileşenlerini göstermektedir:
    - Görselleştirme için veri hazırlar
 
 ### Sistem Diyagramı
-![Sistem Diyagramı](shared/png/Diagram.png)
+<!-- ![Sistem Diyagramı](shared/png/Diagram.png) -->
 
 Sistem diyagramı, bileşenler arası iletişimi ve veri akışını detaylı olarak gösterir.
 
