@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-# ----------------------------
-# DÜZELTİLMİŞ TEK PARÇA KOD
-# ----------------------------
 
 # --- 1. Sabit Tanımlar ---
 SUNUCU_SAYISI = 4
