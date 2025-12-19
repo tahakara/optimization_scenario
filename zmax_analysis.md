@@ -872,3 +872,84 @@ $$
 & ALG \in \{RR, WRR, LC, WLC\}
 \end{aligned}
 $$
+
+---
+
+### Değişken ve Parametre Açıklamaları
+
+#### Amaç Fonksiyonu Değişkenleri
+
+| Sembol | Açıklama | Birim | Değer/Aralık |
+|--------|----------|-------|--------------|
+| $Z_{max}^{ALG}$ | Algoritma $ALG$ için Zmax performans metriği | - | $[0, \infty)$ |
+| $P^{ALG}$ | Algoritma $ALG$ ile toplam işlenen istek sayısı | adet | Simülasyonda: 92,412 - 110,256 |
+| $\bar{Q}^{ALG}$ | Algoritma $ALG$ için ortalama kuyruk uzunluğu | istek | Simülasyonda: 27,613 - 37,935 |
+| $\bar{W}^{ALG}$ | Algoritma $ALG$ için ortalama bekleme süresi | saniye | Simülasyonda: 2,104 - 2,325 |
+
+#### Karar Değişkenleri
+
+| Sembol | Açıklama | Tip | Değer/Aralık |
+|--------|----------|-----|--------------|
+| $x_{ij}$ | İstek $j$'nin sunucu $i$'ye atanıp atanmadığı | Binary | $\{0, 1\}$ |
+| $w_i$ | Sunucu $i$'nin ağırlığı | Tamsayı | $w_i \in \{5, 3, 2, 1\}$ |
+| $v_i$ | Sunucu $i$'nin işlem hızı faktörü | Sürekli | $v_i \in \{1.5, 1.2, 1.0, 0.8\}$ |
+
+#### Durum Değişkenleri (Zamana Bağlı)
+
+| Sembol | Açıklama | Birim | Değer/Aralık |
+|--------|----------|-------|--------------|
+| $Q_i(t)$ | Sunucu $i$'nin $t$ anındaki kuyruk uzunluğu | istek | $Q_i \geq 0$ |
+| $L_i(t)$ | Sunucu $i$'nin $t$ anındaki CPU yükü | birim | $0 \leq L_i \leq 100$ |
+| $C_i(t)$ | Sunucu $i$'nin $t$ anındaki aktif bağlantı sayısı | adet | $C_i = Q_i + A_i$ |
+| $A_i(t)$ | Sunucu $i$'de $t$ anında işlenen istek sayısı | adet | $A_i \geq 0$ |
+
+#### Sabit Parametreler
+
+| Sembol | Açıklama | Değer |
+|--------|----------|-------|
+| $S$ | Toplam sunucu sayısı | 4 |
+| $N$ | Toplam gelen istek sayısı | ~116,000 |
+| $T$ | Simülasyon süresi | 600 saniye |
+| $\Delta t$ | Zaman adımı (time-step) | 0.01 saniye |
+| $C_i$ | Sunucu $i$'nin maksimum CPU kapasitesi | 100 birim |
+| $v_{min}$ | Minimum işlem hızı | 0.8 |
+| $v_{max}$ | Maksimum işlem hızı | 1.5 |
+| $W_{total}$ | Toplam ağırlık (WRR için) | $\sum w_i = 11$ |
+
+#### İstek Parametreleri
+
+| Sembol | Açıklama | Dağılım | Değer/Aralık |
+|--------|----------|---------|--------------|
+| $c_j$ | İstek $j$'nin CPU ihtiyacı | $U(5, 20)$ | 5.0 - 20.0 birim |
+| $T_{base,j}$ | İstek $j$'nin temel işlem süresi | $U(0.5, 3.0)$ | 0.5 - 3.0 saniye |
+| $W_j$ | İstek $j$'nin kuyrukta bekleme süresi | - | $\geq 0$ saniye |
+| $\lambda(t)$ | $t$ anındaki istek geliş oranı | Poisson | 133.3 - 333.3 req/s |
+
+#### İndeksler
+
+| Sembol | Açıklama | Aralık |
+|--------|----------|--------|
+| $i$ | Sunucu indeksi | $i \in \{1, 2, 3, 4\}$ |
+| $j$ | İstek indeksi | $j \in \{1, 2, ..., N\}$ |
+| $t$ | Zaman indeksi | $t \in [0, T]$ |
+| $ALG$ | Algoritma türü | $ALG \in \{RR, WRR, LC, WLC\}$ |
+
+#### Algoritma-Spesifik Değişkenler
+
+| Sembol | Algoritma | Açıklama |
+|--------|-----------|----------|
+| $\mathcal{W}$ | WRR | Ağırlık tekerleği dizisi: $\{1,1,1,1,1,2,2,2,3,3,4\}$ |
+| $E_i(t)$ | WLC | Efektif yük metriği: $\frac{C_i(t)}{w_i \cdot v_i} + \alpha \cdot \frac{L_i(t)}{C_i^{max}}$ |
+| $\alpha$ | WLC | CPU yükü ağırlık faktörü: 5 |
+| $p_i$ | WRR/WLC | Sunucu $i$'nin dağılım oranı: $\frac{w_i}{\sum_k w_k}$ |
+
+#### Kısıt Açıklamaları
+
+| Kısıt | Matematiksel İfade | Açıklama |
+|-------|-------------------|----------|
+| Atama | $\sum_{i=1}^{S} x_{ij} = 1$ | Her istek tam olarak bir sunucuya atanır |
+| CPU Kapasitesi | $L_i(t) \leq C_i$ | Sunucu CPU yükü kapasiteyi aşamaz |
+| Ağırlık Pozitifliği | $w_i > 0$ | Tüm ağırlıklar pozitif olmalı |
+| İşlem Hızı | $v_{min} \leq v_i \leq v_{max}$ | İşlem hızı belirli aralıkta olmalı |
+| Kuyruk Pozitifliği | $Q_i(t) \geq 0$ | Kuyruk uzunluğu negatif olamaz |
+| Binary Atama | $x_{ij} \in \{0, 1\}$ | Atama değişkeni binary |
